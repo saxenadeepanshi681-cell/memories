@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thakur ke liye 💌</title>
+<style>
+:root{--bg1:#ffd6e5;--bg2:#ffb3cf;--card:#fff;--ink:#5a1f3a;--pink:#ff4f8b;--soft:#fff0f6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#3a1228;--bg2:#5a1f3a;--card:#2b0f1e;--ink:#ffe3ee;--pink:#ff6fa0;--soft:#3d1830;color-scheme:dark}}
+:root[data-theme="dark"]{--bg1:#3a1228;--bg2:#5a1f3a;--card:#2b0f1e;--ink:#ffe3ee;--pink:#ff6fa0;--soft:#3d1830;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);font-family:"Poppins","Segoe UI",system-ui,sans-serif;overflow-x:hidden}
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.h{position:absolute;bottom:-40px;animation:up linear forwards;opacity:.8}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+#intro{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:20px}
+.env{position:relative;width:min(300px,80vw);height:200px;background:#ff8fb7;border-radius:10px;cursor:pointer;box-shadow:0 12px 30px rgba(255,79,139,.4);animation:bob 2.2s ease-in-out infinite}
+.env:before{content:"";position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,transparent 50%,#ff7aa8 50%) left/50% 100% no-repeat,linear-gradient(225deg,transparent 50%,#ff7aa8 50%) right/50% 100% no-repeat}
+.flap{position:absolute;left:0;top:0;width:100%;height:105px;background:#ff5c97;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s;z-index:2}
+.env.open .flap{transform:rotateX(180deg)}
+.name{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;font:700 30px "Brush Script MT",cursive,serif;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.25);pointer-events:none;transition:opacity .4s}
+.env.open .name{opacity:0}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.click{font-weight:600;color:var(--pink);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{transform:scale(1.1)}}
+#memo{display:none;position:relative;z-index:1;max-width:640px;margin:0 auto;padding:24px 16px 60px}
+#memo.show{display:block;animation:fade 1s}
+@keyframes fade{from{opacity:0;transform:translateY(20px)}}
+.card{background:var(--card);border-radius:22px;padding:20px;margin:18px 0;box-shadow:0 8px 24px rgba(255,79,139,.25)}
+h2{margin:0 0 12px;color:var(--pink);font-size:22px}
+.edit{min-height:80px;outline:none;border-radius:12px;padding:10px;background:var(--soft);line-height:1.6;white-space:pre-wrap}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.slot{position:relative;aspect-ratio:1;border:2px dashed var(--pink);border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;cursor:pointer;background:var(--soft);color:var(--pink)}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot input{display:none}
+.collage{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:90px;gap:6px}
+.collage .slot{aspect-ratio:auto;border-radius:12px}
+.collage .slot:nth-child(1){grid-column:span 2;grid-row:span 2}
+.collage .slot:nth-child(4){grid-row:span 2}
+.collage .slot:nth-child(5){grid-column:span 2}
+.timer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.timer div{background:var(--soft);border-radius:14px;padding:12px 4px}
+.timer b{display:block;font-size:26px;color:var(--pink)}
+.timer span{font-size:12px}
+audio,video{width:100%;border-radius:14px;margin-top:10px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+button{border:0;border-radius:30px;padding:12px 22px;font:600 15px inherit;background:var(--pink);color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(255,79,139,.4)}
+#ans{text-align:center;margin-top:12px;font-weight:600;color:var(--pink);min-height:24px}
+.pick{font-size:13px;margin-top:8px;opacity:.8}
+.note{background:linear-gradient(135deg,#fff7c9,#ffe3ee);color:#5a1f3a;border-radius:6px;transform:rotate(-1deg)}
+.note .edit{background:transparent}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+
+<section id="intro">
+  <div class="env" id="env"><div class="flap"></div><div class="name">Thakur Shab I LOVE YOU 💗</div></div>
+  <div class="click">Click here 💌</div>
+</section>
+
+<main id="memo">
+  <div class="card">
+    <h2>📸 Some Special Memories</h2>
+    <div class="grid" id="mem"></div>
+    <div class="pick">Photo add karne ke liye box par tap karo</div>
+  </div>
+
+  <div class="card">
+    <h2>💭Just you and me...👉👈</h2>
+    <div class="edit" contenteditable="true">muhje nhi pta me yeh ku banai hu... par ab bana rhi hu to hope so aap pura pado gye or dekho gyee bhi or reply bhi doge muhje iskaa...👉👈
+
+baby mene kabhi nhi socha tha ku=i tu mera pyar banega jis sihab ki dosti thi hamari... lekin tera muhje har chij me support krna mera stand lena yehi sabne meko tere se pyar krva diya ..... esa lagta hai ki bss yeh insaan mil jae muhje kuki iski trh pyar nhi kr skta meko to ....👀🥹 
+thakur shab uhi time bita ha kuch yaadon se sath muje tere se bhut pyr ho gya ha me tere bina rhene ka soch bhi nhi sktii....  i knoe=w yehi socho gye ki phir se flimy ho rhi hai yeh bhut tbh its true and i know tera pyar krne ka treeka bhut alg hai sabsee isliye to meko tu pnsd hehehe.... me janti hu tu mewko bhut pyr mkrta hai bss dkehta nhi ha kuki teko dekhna nhi pnsd  or jruri nhi ki dkehya jae bina dekhae bhi pyr hota ha vahi pyr pyr hota ha bss tu chaiye muhjee tu bss tuu i m always ready to change myslef only for you jese aapko achha kage vese banna chati hu  meee... bcz you are the  person where i finish my love ........... i love you so much me hamseha tumhe specail feel krvane ke liye kuch bhi krti huuu meko lagta ha ki jo itna special ha usko roj special feel ho bsss isliye yeh sab krti rheti hu  baby ❤️</div>
+  </div>
+
+  <div class="card">
+    <h2>🖼️ our special </h2>
+    <div class="collage" id="col"></div>
+    <div class="edit" contenteditable="true" style="min-height:50px;margin-top:12px">yeh jo photos ha nah yeh bhut pyari ha kuki me pyari huuu ...hehehehe✨</div>
+  </div>
+
+  <div class="card">
+    <h2>⏳ Countdown — 9 January 2027</h2>
+    <div class="timer">
+      <div><b id="d">0</b><span>Days</span></div>
+      <div><b id="h">0</b><span>Hours</span></div>
+      <div><b id="m">0</b><span>Minutes</span></div>
+      <div><b id="s">0</b><span>Seconds</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎵 song for you </h2>
+    <label class="slot" style="aspect-ratio:auto;padding:14px">🎶 Song add karo (mp3)<input type="file" accept="audio/*" id="song"></label>
+    <audio id="player" controls style="display:none"></audio>
+  </div>
+
+  <div class="card">
+    <h2>💖 and one request hai I know roh=j milna aapse nhi hoga kuki bhut dur hai cllh aapka thak jate gho aap but weekk me atleast ek din jis din aapki chutti ho us din to mere sath alpha 2 me walk kr sakte ho tiodi der k liye pls baby usse meko achha feel hoga bss kuki me yahan akele hu koi aapna nhi hai yaahn pee to meko toda irriation sa ho jata ha to pls  meri request manloo yrr ek din jab chutti hoo bss todi der meko achha lagta ha time spend krna tumhare sath😘😛🥺......</h2>
+    <p style="text-align:center;margin:0">Kya tum hamesha mere saath rahoge?</p>
+    <div class="btns">
+      <button onclick="ans('Yay! Sure I will 🥰 Love you! meko pta tha manjao gyee')">Sure I will 💕</button>
+      <button onclick="ans('Okay, I will try 😊 baby yrr man jao nah request kr rhi hu ese mt  kro yrrr 💗')">I will try 🌸</button>
+    </div>
+    <div id="ans"></div>
+  </div>
+
+  <div class="card note">
+    <h2>📝 Thakur shab ....😘😛🥺 </h2>
+    <div class="edit" contenteditable="true">Thakur Shab ,
+
+Tum meri zindagi ki sabse pyari muskaan ho. Tumhare saath har din special hai..... 💗
+
+— Tumhara❤️</div>
+  </div>
+
+  <div class="card">
+    <h2>🎬 video of our moments </h2>
+    <label class="slot" style="aspect-ratio:auto;padding:14px">🎥 Video clip add karo<input type="file" accept="video/*" id="vid"></label>
+    <video id="vplayer" controls playsinline style="display:none"></video>
+  </div>
+</main>
+
+<script>
+function slot(parent,n){for(let i=0;i<n;i++){const l=document.createElement('label');l.className='slot';l.innerHTML='📷 Photo<input type="file" accept="image/*">';l.querySelector('input').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=document.createElement('img');im.src=URL.createObjectURL(f);l.appendChild(im)};parent.appendChild(l)}}
+slot(document.getElementById('mem'),4);slot(document.getElementById('col'),5);
+function heart(){const e=document.createElement('div');e.className='h';e.textContent=['💗','💖','💕','❤️','💘'][Math.random()*5|0];e.style.left=Math.random()*100+'%';e.style.fontSize=(14+Math.random()*22)+'px';e.style.animationDuration=(5+Math.random()*5)+'s';document.getElementById('hearts').appendChild(e);setTimeout(()=>e.remove(),10500)}
+setInterval(heart,450);
+document.getElementById('env').onclick=function(){this.classList.add('open');for(let i=0;i<14;i++)setTimeout(heart,i*80);setTimeout(()=>{document.getElementById('intro').style.display='none';document.getElementById('memo').classList.add('show');window.scrollTo(0,0)},900)};
+const target=new Date(2027,0,9,0,0,0).getTime();
+function tick(){let t=Math.max(0,target-Date.now());const s=Math.floor(t/1000);d.textContent=Math.floor(s/86400);h.textContent=Math.floor(s%86400/3600);m.textContent=Math.floor(s%3600/60);document.getElementById('s').textContent=s%60}
+tick();setInterval(tick,1000);
+song.onchange=e=>{const f=e.target.files[0];if(!f)return;player.src=URL.createObjectURL(f);player.style.display='block';player.play().catch(()=>{})};
+vid.onchange=e=>{const f=e.target.files[0];if(!f)return;vplayer.src=URL.createObjectURL(f);vplayer.style.display='block'};
+function ans(t){document.getElementById('ans').textContent=t;for(let i=0;i<20;i++)setTimeout(heart,i*60)}
+</script>
+</body>
+</html>
